@@ -25,6 +25,7 @@ void addVertex(int data);
 void addEdge(int data1,int data2);
 Node* removeVertex(int data);
 Node* removeEdge(int data1,int data2);
+int* neighbours(int data);
 int numVertices();
 int inDegree(int data);
 int outDegree(int data);
