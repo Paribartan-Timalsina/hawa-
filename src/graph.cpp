@@ -49,9 +49,10 @@ void Graph::addVertex(int data)
     Node *newVertex = new Node(data);
     if (Head == nullptr)
     {
-        Head = newVertex;
-        Head->nextvertex = nullptr;
-        Head->nextneighbour = nullptr;
+      
+        newVertex->nextvertex = nullptr;
+        newVertex->nextneighbour = nullptr;
+         Head = newVertex;
     }
     // if(isEmpty()){
     //     return;
@@ -93,21 +94,25 @@ void Graph::addEdge(int data1, int data2)
 }
 Node *Graph::removeVertex(int data)
 {
-    int flag = 1;
+    int flag = 0;
+    int edgeRemove=0;
     if (Head == nullptr)
     {
         cout << "No any Vertex with data " << data << endl
              << endl;
         flag = 1;
     }
-
+if(flag==0){
     Node *searchNode1 = Head;
 
-    // if(searchNode1->value==data){
-    //     Head=searchNode1->nextvertex;
-    // }
+    if(searchNode1->value==data){
+        Head=searchNode1->nextvertex;
+        flag=1;
+    }
+    if(flag==0){
     while (searchNode1 != nullptr)
     {
+       
 
         if (searchNode1->nextvertex == nullptr)
         {
@@ -115,6 +120,7 @@ Node *Graph::removeVertex(int data)
             cout << "No any Vertex with data " << data << endl
                  << endl;
             flag = 1;
+    edgeRemove=1;
             break;
             // throw "nothing found";
         }
@@ -130,6 +136,15 @@ Node *Graph::removeVertex(int data)
     if (flag == 0)
     {
         searchNode1->nextvertex = searchNode1->nextvertex->nextvertex;
+    }
+if(edgeRemove==0){
+    Node* edgedeleteNode=Head;
+    while(edgedeleteNode!=nullptr){
+        removeEdge(edgedeleteNode->value,data);
+        edgedeleteNode=edgedeleteNode->nextvertex;
+    }
+}
+    }
     }
 }
 Node *Graph::removeEdge(int data1, int data2)
