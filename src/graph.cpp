@@ -66,31 +66,44 @@ void Graph::addVertex(int data)
 }
 void Graph::addEdge(int data1, int data2)
 {
+    int flag=0;
     Node *searchNode1 = Head;
     Node *searchNode2 = Head;
     if (searchNode1 == nullptr || searchNode2 == nullptr)
     {
-        return;
+        cout<<"The graph doesn't contain these data"<<endl;
+        flag=1;
     }
+    if(flag==0){
     while (searchNode1->value != data1)
     {
         if (searchNode1->nextvertex == nullptr)
         {
-            throw "Nothing found";
+            
+            flag=1;
+            break;
         }
         searchNode1 = searchNode1->nextvertex;
     }
     while (searchNode2->value != data2)
     {
-        if (searchNode1->nextvertex == nullptr)
+        if (searchNode2->nextvertex == nullptr)
         {
-            throw "Nothing found";
+            
+            flag=1;
+            break;
         }
         searchNode2 = searchNode2->nextvertex;
     }
+    if(flag==0){
     Node *copyNode = new Node(searchNode2->value);
     copyNode->nextneighbour = searchNode1->nextneighbour;
     searchNode1->nextneighbour = copyNode;
+    }
+    else{
+cout<<"Such vertex isn't present in graph"<<endl;
+    }
+    }
 }
 Node *Graph::removeVertex(int data)
 {
@@ -152,6 +165,10 @@ Node *Graph::removeEdge(int data1, int data2)
     int flag = 0;
     Node *searchNode1 = Head;
     Node *searchNode2 = Head;
+    if(searchNode1==nullptr||searchNode2==nullptr){
+        flag=1;
+    }
+    if (flag==0){
     while (searchNode1->value != data1)
     {
         if (searchNode1->nextvertex == nullptr)
@@ -202,6 +219,10 @@ Node *Graph::removeEdge(int data1, int data2)
     {
         searchNode1->nextneighbour = searchNode1->nextneighbour->nextneighbour;
     }
+    }
+    else{
+        cout<<"No such vertex are present in graph"<<endl;
+    }
 }
 int Graph::numVertices()
 {
@@ -209,7 +230,8 @@ int Graph::numVertices()
     Node *countNode = Head;
     if (countNode == nullptr)
     {
-        throw "No such node is present";
+        return 0;
+       
     }
     while (countNode != nullptr)
     {
@@ -235,13 +257,18 @@ int Graph::inDegree(int data)
 
         while (neighbourNode != nullptr)
         {
-            if (neighbourNode->value == data)
+            if(neighbourNode->nextneighbour==nullptr){
+                break;
+            }
+            if (neighbourNode->nextneighbour-> value == data)
             {
                 count++;
+                break;
             }
             neighbourNode = neighbourNode->nextneighbour;
         }
         searchNode1 = searchNode1->nextvertex;
+        neighbourNode=searchNode1;
     }
     return count;
     // while(searchNode1->value!=data){
